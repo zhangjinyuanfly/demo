@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.zjy.demo.annotation.AnnotationActivity
 import com.zjy.demo.h5.H5Activity
 import com.zjy.demo.jetpack.PagingActivity
 import com.zjy.demo.jetpack.ViewModelActivity
@@ -79,6 +80,12 @@ class MainActivity : AppCompatActivity() {
         h5Data.name = "H5"
         h5Data.jumpActivity = H5Activity::class.java
         demoList.add(h5Data)
+
+        var annotation = DemoData()
+        annotation.name = "annotation"
+        annotation.jumpActivity = AnnotationActivity::class.java
+        demoList.add(annotation)
+
     }
 
 }

@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
-
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -13,6 +12,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+                arguments = [ annotationIndex : 'com.zjy.processor.ButterKnifeProcessor' ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -21,6 +27,9 @@ android {
         }
     }
 }
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -34,6 +43,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'com.facebook.stetho:stetho-okhttp3:1.4.2'
+
+    // annotation 依赖
+    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
+    implementation project(':annotation')
+    implementation project(':processor')
     implementation 'com.google.auto.service:auto-service:1.0-rc3'
     implementation 'com.squareup:javapoet:1.7.0'
     // paging
@@ -44,3 +58,12 @@ dependencies {
     // optional - RxJava support, currently in release candidate
     implementation "android.arch.paging:rxjava2:1.0.0-rc1"
 }
+
+task processorTask(type: Copy) {
+    from '../processor/build/libs/processor.jar' into 'libs/'
+}
+
+//build processor 生成processor.jar
+processorTask.dependsOn(':processor:build')
+preBuild.dependsOn(processorTask)
+

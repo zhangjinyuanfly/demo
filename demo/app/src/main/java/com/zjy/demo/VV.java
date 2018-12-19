@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import com.zjy.annotation.BindView;
 import com.zjy.demo.jetpack.ViewModelActivity;
 
 import java.lang.annotation.ElementType;
@@ -21,6 +22,7 @@ public class VV {
 
     public static HashMap<String, Class> data = new HashMap<>();
 
+    @BindView(R.id.withText)
     public WebView mWebView;
     public void init() {
         data.put("aaa", ViewModelActivity.class);
