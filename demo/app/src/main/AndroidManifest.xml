@@ -33,6 +33,8 @@
         </activity>
         <activity android:name=".annotation.AnnotationActivity">
         </activity>
+        <activity android:name=".constraint.ConstraintActivity">
+        </activity>
     </application>
 
 </manifest>

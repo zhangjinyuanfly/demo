@@ -16,7 +16,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath = true
-                arguments = [ annotationIndex : 'com.zjy.processor.ButterKnifeProcessor' ]
+                arguments = [annotationIndex: 'com.zjy.processor.ButterKnifeProcessor']
             }
         }
     }
@@ -66,4 +66,3 @@ task processorTask(type: Copy) {
 //build processor 生成processor.jar
 processorTask.dependsOn(':processor:build')
 preBuild.dependsOn(processorTask)
-

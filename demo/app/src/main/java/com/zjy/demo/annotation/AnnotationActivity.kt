@@ -8,8 +8,8 @@ import com.zjy.demo.R
 
 class AnnotationActivity : AppCompatActivity() {
 
-    @BindView(R.id.text)
-    var text: TextView? = null
+//    @BindView(R.id.text)
+//    var text: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

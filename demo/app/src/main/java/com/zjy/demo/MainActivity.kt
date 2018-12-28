@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.zjy.demo.annotation.AnnotationActivity
+import com.zjy.demo.constraint.ConstraintActivity
 import com.zjy.demo.h5.H5Activity
 import com.zjy.demo.jetpack.PagingActivity
 import com.zjy.demo.jetpack.ViewModelActivity
@@ -85,6 +86,11 @@ class MainActivity : AppCompatActivity() {
         annotation.name = "annotation"
         annotation.jumpActivity = AnnotationActivity::class.java
         demoList.add(annotation)
+
+        var constraint = DemoData()
+        constraint.name = "ConstraintLayout"
+        constraint.jumpActivity = ConstraintActivity::class.java
+        demoList.add(constraint)
 
     }
 
