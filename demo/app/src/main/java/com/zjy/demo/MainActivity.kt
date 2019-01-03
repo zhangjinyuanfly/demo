@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
     inner class DemoAdapter: RecyclerView.Adapter<DemoHolder>() {
         override fun onCreateViewHolder(p0: ViewGroup, p1: Int): DemoHolder {
             var holder:DemoHolder? = null
-            val inflate = LayoutInflater.from(this@MainActivity).inflate(R.layout.demo_item, p0, false);
-            holder = DemoHolder(inflate);
+            val inflate = LayoutInflater.from(this@MainActivity).inflate(R.layout.demo_item, p0, false)
+            holder = DemoHolder(inflate)
             holder.nameView = inflate.findViewById(R.id.name)
             return holder
         }

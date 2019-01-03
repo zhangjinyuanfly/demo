@@ -69,7 +69,7 @@ class PagingFragment: Fragment() {
      */
     inner class PagingAdapter:PagedListAdapter<DataBean, PagingHolder>(pagingDiff) {
         override fun onCreateViewHolder(p0: ViewGroup, p1: Int): PagingHolder {
-            val inflate = layoutInflater.inflate(R.layout.paging_recycle_item, p0, false);
+            val inflate = layoutInflater.inflate(R.layout.paging_recycle_item, p0, false)
             var holder = PagingHolder(inflate)
             holder.textView = inflate.findViewById(R.id.paging_item_name)
             return holder

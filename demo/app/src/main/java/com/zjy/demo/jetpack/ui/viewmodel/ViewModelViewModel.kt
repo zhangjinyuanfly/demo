@@ -1,6 +1,5 @@
 package com.zjy.demo.jetpack.ui.viewmodel
 
-import android.arch.core.util.Function
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
@@ -21,11 +20,11 @@ class ViewModelViewModel : ViewModel() {
 
     // data:MutableLiveData 的任何改变也会影响到下面两个data的改变，也会通知上层注册的Observer回调。
     // map返回的是map<X, Y>Y类型
-    var liveMapData: LiveData<Int> = Transformations.map<String, Int>(data!!) { input: String? ->
+    var liveMapData: LiveData<Int> = Transformations.map<String, Int>(data!!) {
         11
     }
     // map返回的是switchMap<X, Y>的LiveData<Y>类型
-    var liveSwitchData: LiveData<String> = Transformations.switchMap<String, String>(data!!) { input: String ->
-        MutableLiveData<String>().also { it.value = "222" }
+    var liveSwitchData: LiveData<String> = Transformations.switchMap<String, String>(data!!) {
+        MutableLiveData<String>().also {input -> input.value = "222" }
     }
 }

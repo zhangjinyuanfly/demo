@@ -1,6 +1,5 @@
 package com.zjy.demo;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -71,6 +70,6 @@ public class VV {
     @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
     @Retention(RetentionPolicy.CLASS)
     public @interface User {
-        public String print();
+        String print();
     }
 }

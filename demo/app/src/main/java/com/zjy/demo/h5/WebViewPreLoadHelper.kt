@@ -26,26 +26,26 @@ class WebViewPreLoadHelper(context: Context) {
         mWebView = WebView(context)
         mWebView?.setBackgroundColor(context.resources.getColor(android.R.color.transparent))
         // 启用javascript
-        mWebView?.getSettings()?.setJavaScriptEnabled(true)
+        mWebView?.settings?.javaScriptEnabled = true
 
-        mWebView?.getSettings()?.setLoadWithOverviewMode(true)
-        mWebView?.getSettings()?.setAllowFileAccess(true)  //设置可以访问文件
-        mWebView?.getSettings()?.setDomStorageEnabled(true)
+        mWebView?.settings?.loadWithOverviewMode = true
+        mWebView?.settings?.allowFileAccess = true  //设置可以访问文件
+        mWebView?.settings?.domStorageEnabled = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mWebView?.getSettings()?.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW) //设置 缓存模式 // 开启 DOM storage API 功能
+            mWebView?.settings?.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW //设置 缓存模式 // 开启 DOM storage API 功能
         }
 
         // 允许屏幕尺寸适配
-        mWebView?.getSettings()?.setUseWideViewPort(true)
+        mWebView?.settings?.useWideViewPort = true
         //支持放大
-        mWebView?.getSettings()?.setSupportZoom(true)
-        mWebView?.getSettings()?.setTextZoom(100)
-        mWebView?.getSettings()?.setBuiltInZoomControls(true)
-        mWebView?.getSettings()?.setDisplayZoomControls(false)
-        mWebView?.getSettings()?.setCacheMode(WebSettings.LOAD_DEFAULT)
+        mWebView?.settings?.setSupportZoom(true)
+        mWebView?.settings?.textZoom = 100
+        mWebView?.settings?.builtInZoomControls = true
+        mWebView?.settings?.displayZoomControls = false
+        mWebView?.settings?.cacheMode = WebSettings.LOAD_DEFAULT
         mWebView?.settings?.domStorageEnabled = true
-        mWebView?.setHorizontalScrollBarEnabled(false)//水平不显示
-        mWebView?.setVerticalScrollBarEnabled(false) //垂直不显示
+        mWebView?.isHorizontalScrollBarEnabled = false//水平不显示
+        mWebView?.isVerticalScrollBarEnabled = false //垂直不显示
         mWebView?.webViewClient = object : WebViewClient(){
 //            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
 //                return super.shouldOverrideUrlLoading(view, request)
@@ -53,12 +53,12 @@ class WebViewPreLoadHelper(context: Context) {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 if(TextUtils.equals(url,"about:blank") || TextUtils.isEmpty(url)) {
-                    return;
+                    return
                 }
                 Log.e("zjy","webView finish")
                 var intent = Intent(context, H5PreloadActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                context?.startActivity(intent)
+    context.startActivity(intent)
             }
 
         }

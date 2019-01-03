@@ -49,10 +49,10 @@ class ViewModelFragment : Fragment() {
         })
 
         // 注册observer，当viewModel.data发生变化，此处observer也会执行
-        viewModel.liveMapData?.observe(this@ViewModelFragment, Observer {
+        viewModel.liveMapData.observe(this@ViewModelFragment, Observer {
             Log.e("zjy", "liveMapData = $it")
         })
-        viewModel.liveSwitchData?.observe(this@ViewModelFragment, Observer {
+        viewModel.liveSwitchData.observe(this@ViewModelFragment, Observer {
             Log.e("zjy", "liveSwitchData  = $it")
         })
     }
