@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.zjy.demo"
         minSdkVersion 21
-        targetSdkVersion 28
+//        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -25,6 +25,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // manifest中定义不同的值
+            manifestPlaceholders = [targetver:26]
+        }
+        debug {
+            // manifest中定义不同的值
+            manifestPlaceholders = [targetver:28]
         }
     }
     lintOptions {
