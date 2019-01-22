@@ -14,6 +14,7 @@ import com.zjy.demo.constraint.ConstraintActivity
 import com.zjy.demo.h5.H5Activity
 import com.zjy.demo.jetpack.PagingActivity
 import com.zjy.demo.jetpack.ViewModelActivity
+import com.zjy.demo.picinpic.PicInPicActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -92,6 +93,10 @@ class MainActivity : AppCompatActivity() {
         constraint.jumpActivity = ConstraintActivity::class.java
         demoList.add(constraint)
 
+        var picInPic = DemoData()
+        picInPic.name = "PictureInPicture"
+        picInPic.jumpActivity = PicInPicActivity::class.java
+        demoList.add(picInPic)
     }
 
 }

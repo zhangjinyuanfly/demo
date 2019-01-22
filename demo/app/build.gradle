@@ -26,7 +26,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // manifest中定义不同的值
-            manifestPlaceholders = [targetver:26]
+            manifestPlaceholders = [targetver:28]
         }
         debug {
             // manifest中定义不同的值
