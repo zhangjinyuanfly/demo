@@ -1,0 +1,7 @@
+WEEX
+
+根节点：
+WidgetContainer
+控件ui库：com.taobao.weex.ui.component
+
+native--execjs解析创建view并进行布局。返回java。进行addview操作。

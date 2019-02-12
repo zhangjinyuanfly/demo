@@ -119,6 +119,10 @@ dependencies {
     testImplementation "android.arch.paging:common:$paging_version"
     // optional - RxJava support, currently in release candidate
     implementation "android.arch.paging:rxjava2:1.0.1"
+
+    // VasSonic webview预加载
+    implementation 'com.tencent.sonic:sdk:2.0.0-beta'
+
 }
 
 task processorTask(type: Copy) {
