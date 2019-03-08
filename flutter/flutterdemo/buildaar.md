@@ -17,7 +17,7 @@ apply plugin: 'com.android.application' 调整为 apply plugin: 'com.android.lib
 去掉<application>标签中和主工程冲突的属性：android:name android:label android:icon
 
 ```
-### 3. 执行 flutter build apk 默认release包，生成的aar路径：build/app/outputs/aar，这个aar会缺少flutter_shared/icudt.dat文件，可以把apk包中的这个文件copy到arr的对应位置来。
+### 3. flutter1.2版本已经不需要这个步骤了。// 执行 flutter build apk 默认release包，生成的aar路径：build/app/outputs/aar，这个aar会缺少flutter_shared/icudt.dat文件，可以把apk包中的这个文件copy到arr的对应位置来。
 
 ### 4. build成功的aar引入主工程：
 

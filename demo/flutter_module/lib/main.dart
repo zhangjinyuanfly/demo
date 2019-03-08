@@ -90,7 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.network('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1549972031791&di=75e246f2e7fd9050d53789040a374def&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic%2Fcover%2F00%2F23%2F24%2F57de39f09c91b_610.jpg', width: 100,height: 100),
             Text(
               'You have pushed the button this many times:',
             ),
@@ -98,7 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.display1,
             ),
-            Text('ffffff')
           ],
         ),
       ),
