@@ -91,6 +91,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
                 pinned: true,
               ),
+              SliverAppBar(
+                pinned: true,
+                expandedHeight: 70,
+                leading: Text('fff'),
+              ),
               SliverFixedExtentList(
                   itemExtent: 70.0,
                   delegate: SliverChildBuilderDelegate(

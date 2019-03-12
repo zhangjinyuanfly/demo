@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutterdemo/generated/application.dart';
 import 'package:flutterdemo/generated/translations.dart';
 import 'package:flutterdemo/page/home_page.dart';
+import 'animation/anim_test.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,7 +43,8 @@ class MyAppState extends State<MyApp> {
     return new MaterialApp(
       title: 'myApp',
       theme: ThemeData.light(),
-      home: HomePage(),
+      // home: HomePage(),
+      home: AnimDemo(),
 
       localizationsDelegates: [
         GlobalWidgetsLocalizations.delegate,

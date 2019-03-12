@@ -43,6 +43,20 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
             child: Text('来了老弟',style: TextStyle(fontSize: 10),),
           ),
         ),
+        // Align(
+        //   alignment: Alignment.bottomCenter,
+        //   child: TabBar(
+        //     tabs: <Widget>[
+        //       RaisedButton(
+        //         child: Text('111'),
+        //       ),
+        //       RaisedButton(
+        //         child: Text('222'),
+        //       ),
+        //     ],
+          
+        // ),
+        // ),
       ],
     );
 
