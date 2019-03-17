@@ -4,7 +4,8 @@ import 'package:flutterdemo/generated/application.dart';
 import 'package:flutterdemo/generated/translations.dart';
 import 'package:flutterdemo/page/home_page.dart';
 import 'animation/anim_test.dart';
-
+import 'page/pageview_demo.dart';
+import 'page/tab_pageview_demo.dart';
 void main() {
   runApp(MyApp());
 }
@@ -44,15 +45,17 @@ class MyAppState extends State<MyApp> {
       title: 'myApp',
       theme: ThemeData.light(),
       // home: HomePage(),
-      home: AnimDemo(),
+      // home: AnimDemo(),
+      // home: DisplayPage(),
+      home: MyHomePage(),
 
-      localizationsDelegates: [
-        GlobalWidgetsLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        TranslationsDelegate(),
-      //  _localizationsDelegate,
-      ],
-      supportedLocales: applic.supportLocales(),
+      // localizationsDelegates: [
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalMaterialLocalizations.delegate,
+      //   TranslationsDelegate(),
+      // //  _localizationsDelegate,
+      // ],
+      // supportedLocales: applic.supportLocales(),
     );
   }
 }
