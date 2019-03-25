@@ -1,0 +1,18 @@
+android组推荐：帅将
+1.ArgusAPM和微信Matrix性能对比。对选择apm方向做出合理判断。
+2.公共房项目中，认真负责，承担起大部分的开发和协调工作。按时保量完成任务。
+
+assembleSmDisableLoginForceFullScreenDisableGooglePlayDisableCtaDisableLiveChannelDebug
+
+
+{"taUid":"userid","myUid":"myuid","token":"token"}
+
+
+
+打release包步骤：
+build.gradle中
+assets.srcDirs = ['src/main/assets', flutterassets+"/build/app/intermediates/assets/debug/"]
+改成
+assets.srcDirs = ['src/main/assets', flutterassets+"/build/app/intermediates/assets/release/"]
+执行命令：
+gradlew.bat -s -PbuildNum=6.7.5.1098 -PoptimizeLogin=false clean defaultRelease
