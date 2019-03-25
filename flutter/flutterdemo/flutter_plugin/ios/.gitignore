@@ -1,18 +1,16 @@
-.DS_Store
-.dart_tool/
-
-.packages
-.pub/
-
 .idea/
 .vagrant/
 .sconsign.dblite
 .svn/
 
+.DS_Store
 *.swp
 profile
 
 DerivedData/
+build/
+GeneratedPluginRegistrant.h
+GeneratedPluginRegistrant.m
 
 .generated/
 
@@ -35,7 +33,4 @@ xcuserdata
 Icon?
 .tags*
 
-build/
-.android/
-.ios/
-.flutter-plugins
+/Flutter/Generated.xcconfig
