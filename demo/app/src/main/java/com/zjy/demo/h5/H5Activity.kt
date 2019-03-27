@@ -3,6 +3,7 @@ package com.zjy.demo.h5
 import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -22,6 +23,25 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
 
     private fun clickAlert() {
         mWebView?.loadUrl("javascript:callJS()")
+//        mWebView?.evaluateJavascript("javascript:callJS()", object: ValueCallback<String> {
+//            override fun onReceiveValue(value: String?) {
+//
+//            }
+//        })
+//        mWebView?.loadDataWithBaseURL()
+
+
+        // load data
+//        val open = assets.open("h5/timecountdown.html")
+//        var bufferedReader = BufferedInputStream(open)
+//        var byte:ByteArray = ByteArray(1024)
+//        var i = 0;
+//        var stringBuffer = StringBuffer()
+//        while((open.read(byte, 0, byte.size)) != -1) {
+//            stringBuffer.append(String(byte))
+//        }
+//        Log.e("zjy","stringbuffer = "+stringBuffer.toString())
+//        mWebView?.loadData(stringBuffer.toString(), "text/html", "utf-8")
     }
 
     var mWebView : WebView ?= null
@@ -36,13 +56,28 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         mBtnCallAlert?.setOnClickListener(this)
 
         mWebView = findViewById(R.id.webview)
-
+        mWebView?.settings?.cacheMode = WebSettings.LOAD_DEFAULT
         mWebView?.settings?.javaScriptEnabled = true
         mWebView?.settings?.javaScriptCanOpenWindowsAutomatically = true
         mWebView?.settings?.allowFileAccessFromFileURLs = false
 
-//        mWebView?.loadUrl("file:///android_asset/h5/javascript.html")
-        mWebView?.loadUrl("file:///android_asset/h5/timecountdown.html")
+
+        mWebView?.settings?.loadsImagesAutomatically = true// 自动加载图片
+        //设置自适应屏幕，两者合用
+        mWebView?.settings?.useWideViewPort = false//将图片调整到适合webview的大小
+        mWebView?.settings?.loadWithOverviewMode = false// 缩放至屏幕的大小
+        mWebView?.settings?.databaseEnabled = true// 不再维护 database/webview.db 没有了
+//        mWebView?.settings?.databasePath = cacheDir.path// 5.1
+        mWebView?.settings?.domStorageEnabled = true
+
+
+        mWebView?.settings?.setAppCacheEnabled(true)
+        mWebView?.settings?.setAppCachePath(cacheDir.path)
+        mWebView?.settings?.setAppCacheMaxSize(5*1024*1024)
+
+
+        mWebView?.loadUrl("file:///android_asset/h5/javascript.html")
+//        mWebView?.loadUrl("file:///android_asset/h5/timecountdown.html")
 //        mWebView?.loadUrl("http://www.huajiao.com")
 
         mWebView?.webViewClient = object : WebViewClient() {

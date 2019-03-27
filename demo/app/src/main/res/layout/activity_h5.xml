@@ -14,7 +14,7 @@
         android:text="callalert"
     />
 
-    <WebView
+    <com.zjy.demo.h5.MyView
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
