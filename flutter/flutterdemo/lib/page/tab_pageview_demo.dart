@@ -157,6 +157,7 @@ class HomeState extends State<MyHomePage> with SingleTickerProviderStateMixin {
           Expanded(
             // PageView.builder
             child: CoverFlow(
+              dismissibleItems:false,
               itemCount: tabList.length,
               dismissedCallback: disposeDismissed,
               currentItemChangedCallback :onCurrPageChanged,

@@ -90,6 +90,9 @@ class _CoverFlowState extends State<CoverFlow> {
   @override
   Widget build(BuildContext context) {
     return new PageView.builder(
+        pageSnapping: false,
+        physics: MYphy(),
+        scrollDirection: Axis.horizontal,
         onPageChanged: (value) {
           setState(() {
             _pageHasChanged = true;
@@ -103,6 +106,8 @@ class _CoverFlowState extends State<CoverFlow> {
         itemCount: widget.itemCount,
         itemBuilder: (context, index) => builder(index));
   }
+
+
 
   Widget builder(int index) {
     return new AnimatedBuilder(
@@ -130,11 +135,24 @@ class _CoverFlowState extends State<CoverFlow> {
               setState(() {
                 widget.dismissedCallback(index, direction);
                 controller.animateToPage(currentPage,
-                    duration: new Duration(seconds: 2), curve: Curves.easeOut);
+                    duration: new Duration(seconds: 2),
+                    curve: Curves.easeOut);
               });
             },
           );
         },
         child: widget.itemBuilder(context, index));
+  }
+  
+  
+}
+class MYphy extends ScrollPhysics {
+
+
+  @override
+  bool shouldAcceptUserOffset(ScrollMetrics position) {
+    print("zjy     ${position.pixels}");
+    super.shouldAcceptUserOffset(position);
+
   }
 }

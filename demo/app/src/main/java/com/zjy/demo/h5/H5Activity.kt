@@ -41,7 +41,8 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         mWebView?.settings?.javaScriptCanOpenWindowsAutomatically = true
         mWebView?.settings?.allowFileAccessFromFileURLs = false
 
-        mWebView?.loadUrl("file:///android_asset/h5/javascript.html")
+//        mWebView?.loadUrl("file:///android_asset/h5/javascript.html")
+        mWebView?.loadUrl("file:///android_asset/h5/timecountdown.html")
 //        mWebView?.loadUrl("http://www.huajiao.com")
 
         mWebView?.webViewClient = object : WebViewClient() {
@@ -91,6 +92,16 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
 
         })
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mWebView?.resumeTimers()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mWebView?.pauseTimers()
     }
 
     override fun onDestroy() {
