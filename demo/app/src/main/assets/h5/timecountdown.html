@@ -15,20 +15,37 @@
 <script type="text/javascript">
 var countdown=60;
 function settime(val) {
-if (countdown == 0) {
-val.removeAttribute("disabled");
-val.value="免费获取验证码";
-countdown = 60;
-} else {
-val.setAttribute("disabled", true);
-val.value="重新发送(" + countdown + ")";
-countdown--;
+    if (countdown == 0) {
+        val.removeAttribute("disabled");
+        val.value="免费获取验证码";
+        countdown = 60;
+    } else {
+        val.setAttribute("disabled", true);
+        val.value="重新发送(" + countdown + ")";
+        countdown--;
+    }
+    setTimeout(function() {
+        settime(val)
+    },1000)
 }
-setTimeout(function() {
-settime(val)
-},1000)
+
+function callJS(){
+  alert("Android调用了JS的callJS方法");
+}
+// 获取localstorage
+function getLocalStorage(key){
+    var act = document.getElementById("act");
+    act.innerHTML = window.localStorage && window.localStorage.getItem(key);
 }
 
 </script>
+
+<script type="xml/javascript">
+
+</script>
+<input type="button" id="getloal" value="getLocalStorage" onclick="getLocalStorage('uid')"/>
+<div id="act">
+    window.localStorage && window.localStorage.getItem(key)
+</div>
 </body>
 </html>

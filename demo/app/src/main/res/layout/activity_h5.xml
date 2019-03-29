@@ -7,12 +7,64 @@
         android:orientation="vertical"
         tools:context=".h5.H5Activity"
 >
-    <Button
-        android:id="@+id/callalert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="callalert"
-    />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center">
+        <TextView
+                android:id="@+id/callalert"
+                style="@style/btn_style"
+                android:text="callalert"
+
+        />
+        <TextView
+                android:id="@+id/start_h5"
+                style="@style/btn_style"
+                android:text="startNewH5"
+        />
+        <TextView
+                android:id="@+id/goforward"
+                style="@style/btn_style"
+                android:text="goforward"
+        />
+        <TextView
+                android:id="@+id/goback"
+                style="@style/btn_style"
+                android:text="goback"
+        />
+        <TextView
+                android:id="@+id/clearcache"
+                style="@style/btn_style"
+                android:text="clearC"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center">
+        <TextView
+                android:id="@+id/resumetimer"
+                style="@style/btn_style"
+                android:text="resumetimer"
+        />
+        <TextView
+                android:id="@+id/pausetimer"
+                style="@style/btn_style"
+                android:text="pausetimer"
+        />
+        <TextView
+                android:id="@+id/resume"
+                style="@style/btn_style"
+                android:text="resume"
+        />
+        <TextView
+                android:id="@+id/pause"
+                style="@style/btn_style"
+                android:text="pause"
+        />
+    </LinearLayout>
+
 
     <com.zjy.demo.h5.MyView
             android:id="@+id/webview"

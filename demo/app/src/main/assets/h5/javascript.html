@@ -7,10 +7,18 @@
 
     // JS代码
     <script>
+    function gelocalstr(key){
+
+        return window.localStorage && window.localStorage.getItem(key);
+    }
+
 // Android需要调用的方法
    function callJS(){
       alert("Android调用了JS的callJS方法");
+      gelocalstr('uid')
    }
+
+
 </script>
 
 </head>
