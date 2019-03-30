@@ -41,3 +41,5 @@
 WebView(Context context, AttributeSet attrs, int defStyleAttr) defStyleAttr不能传入0，否则会导致软键盘无法弹出
 
 webview.addJavascriptInterface 在8.0手机上。只是第一个add进入的会生效。
+
+webview.loadDataWithBaseURL 使用cache部分，8.0以上有坑，会导致goBack失效。

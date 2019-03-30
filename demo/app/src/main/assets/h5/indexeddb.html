@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>IndexedDB</title>
+</head>
+
+<body>
+<h2>IndexedDB（NOSQL）</h2>
+<input value="创建数据库与表" type="button" onclick="create()" />
+<h2 id="msg"></h2>
+<script>
+            //数据库
+            var db;
+
+            //创建数据库与表
+            function create() {
+                //创建一个名称为gomall且版本为2的数据库，返回一个请求
+                var request = indexedDB.open("gomall", 2);
+                //绑定回调事件,成功时
+                request.onsuccess = function(e) {
+                    db = e.target.result;
+                    log('创建数据库成功');
+                };
+                //失败时
+                request.onerror = function(e) {
+                    log("错误：" + e.target.errorCode || e.target.error);
+                };
+                //增加数据库版本号时,会触发onupgradeneeded事件(会在onsuccess之前被调用)
+                request.onupgradeneeded = function(e) {
+                    //创建对象存储空间（ObjectStore），类似表,goods是表名，id是主键，存储的是JSON
+                    e.target.result.createObjectStore("goods",{"keyPath":"id"});
+                    log("初始化数据库成功！");
+                };
+            }
+
+            //显示消息
+            var msg = document.getElementById("msg");
+
+            function log(m) {
+                msg.innerHTML += m + "<br/>";
+            }
+
+            //用于判断浏览器是否支持indexedDB，0，null,'',undefind false
+            if(window.indexedDB) {
+
+            } else {
+                alert('请升级浏览器，如chrome');
+            }
+        </script>
+</body>
+
+</html>

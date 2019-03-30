@@ -6,9 +6,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.webkit.JsPromptResult;
 import android.webkit.WebView;
-
 import com.huajiao.webview.bridge.IJSCallback;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 

@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.webkit.*
-import android.widget.Button
 import android.widget.TextView
 import com.zjy.demo.R
+import java.io.BufferedInputStream
 
 
 class H5Activity : AppCompatActivity(), View.OnClickListener {
@@ -21,31 +21,8 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         startActivity(intent)
     }
 
-    private fun clickAlert() {
-        mWebView?.loadUrl("javascript:callJS()")
-//        mWebView?.evaluateJavascript("javascript:callJS()", object: ValueCallback<String> {
-//            override fun onReceiveValue(value: String?) {
-//
-//            }
-//        })
-//        mWebView?.loadDataWithBaseURL()
-
-
-        // load data
-//        val open = assets.open("h5/timecountdown.html")
-//        var bufferedReader = BufferedInputStream(open)
-//        var byte:ByteArray = ByteArray(1024)
-//        var i = 0;
-//        var stringBuffer = StringBuffer()
-//        while((open.read(byte, 0, byte.size)) != -1) {
-//            stringBuffer.append(String(byte))
-//        }
-//        Log.e("zjy","stringbuffer = "+stringBuffer.toString())
-//        mWebView?.loadData(stringBuffer.toString(), "text/html", "utf-8")
-    }
-
     var mWebView : WebView ?= null
-    var mBtnCallAlert : TextView ?= null
+    var mBtnLoadData : TextView ?= null
     var mBtnStartNewH5: TextView ?= null
     var mBtnResume: TextView ?= null
     var mBtnPause: TextView ?= null
@@ -55,16 +32,14 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
     var mBtnGoGorward: TextView?= null
     var mBtnClearCache: TextView?= null
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.e("zjy","H5Activity onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_h5)
 
 
-        mBtnCallAlert = findViewById(R.id.callalert)
-        mBtnCallAlert?.setOnClickListener(this)
+        mBtnLoadData = findViewById(R.id.loaddata)
+        mBtnLoadData?.setOnClickListener(this)
         mBtnStartNewH5 = findViewById(R.id.start_h5)
         mBtnStartNewH5?.setOnClickListener(this)
         mBtnResume = findViewById(R.id.resume)
@@ -96,7 +71,7 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         mWebView?.settings?.useWideViewPort = false//将图片调整到适合webview的大小
         mWebView?.settings?.loadWithOverviewMode = false// 缩放至屏幕的大小
 
-//        mWebView?.settings?.databaseEnabled = true// 不再维护 database/webview.db 没有了
+        mWebView?.settings?.databaseEnabled = true// 不再维护 database/webview.db 没有了
         mWebView?.settings?.domStorageEnabled = true// 打开domcache
 
         mWebView?.settings?.setAppCacheEnabled(true)
@@ -106,10 +81,10 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
 
 
 //        mWebView?.loadUrl("file:///android_asset/h5/javascript.html")
-//        mWebView?.loadUrl("file:///android_asset/h5/timecountdown.html")
+        mWebView?.loadUrl("file:///android_asset/h5/timecountdown.html")
 //        mWebView?.loadUrl("http://www.huajiao.com")
 //        mWebView?.loadUrl("http://www.qq.com")
-        mWebView?.loadUrl("https://activity.huajiao.com/web/share/banner/2018/pgcBuy/index.html?userId=")
+//        mWebView?.loadUrl("https://activity.huajiao.com/web/share/banner/2018/pgcBuy/index.html?userId=")
 //        mWebView?.loadUrl("https://test.huajiao.com/h5_plugin/test.html")
         mWebView?.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
@@ -143,9 +118,6 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        // load H5
-//        WebViewPreLoadHelper.getInstance(this)?.loadUrl("https://www.163.com/")
-
         // 由于设置了弹窗检验调用结果,所以需要支持js对话框
         // webview只是载体，内容的渲染需要使用webviewChromClient类去实现
         // 通过设置WebChromeClient对象处理JavaScript的对话框
@@ -163,7 +135,6 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
             }
 
         })
-
     }
 
     fun writeData() {
@@ -190,10 +161,9 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
 //        mWebView?.onPause()
     }
 
-
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.callalert -> clickAlert()
+            R.id.loaddata -> loadData()//mWebView?.loadUrl("javascript:callJS()")
             R.id.start_h5 -> startH5()
             R.id.resumetimer -> mWebView?.resumeTimers()
             R.id.pausetimer -> mWebView?.pauseTimers()
@@ -207,6 +177,24 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
+
+    private fun loadData() {
+        // load data
+        val open = assets.open("h5/javascript.html")
+        var bufferedReader = BufferedInputStream(open)
+        var byte:ByteArray = ByteArray(1024)
+        var i = 0;
+        var stringBuffer = StringBuffer()
+        while((open.read(byte, 0, byte.size)) != -1) {
+            stringBuffer.append(String(byte))
+        }
+        Log.e("zjy","stringbuffer = "+stringBuffer.toString())
+        // 存在中文乱码问题
+//        mWebView?.loadData(stringBuffer.toString(), "text/html", "utf-8")
+        // 调整为
+        mWebView?.loadData(stringBuffer.toString(), "text/html; charset=UTF-8", null)
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

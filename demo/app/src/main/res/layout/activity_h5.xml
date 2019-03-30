@@ -12,9 +12,9 @@
             android:layout_height="30dp"
             android:gravity="center">
         <TextView
-                android:id="@+id/callalert"
+                android:id="@+id/loaddata"
                 style="@style/btn_style"
-                android:text="callalert"
+                android:text="loaddata"
 
         />
         <TextView
@@ -25,12 +25,12 @@
         <TextView
                 android:id="@+id/goforward"
                 style="@style/btn_style"
-                android:text="goforward"
+                android:text="goforward2"
         />
         <TextView
                 android:id="@+id/goback"
                 style="@style/btn_style"
-                android:text="goback"
+                android:text="goback-1"
         />
         <TextView
                 android:id="@+id/clearcache"
