@@ -43,3 +43,5 @@ WebView(Context context, AttributeSet attrs, int defStyleAttr) defStyleAttr不�
 webview.addJavascriptInterface 在8.0手机上。只是第一个add进入的会生效。
 
 webview.loadDataWithBaseURL 使用cache部分，8.0以上有坑，会导致goBack失效。
+
+透明webview在oppo vivo 8.0系统白屏问题：http和https切换的时候，http或者https内部切换的时候没问题 

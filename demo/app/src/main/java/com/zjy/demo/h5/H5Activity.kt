@@ -63,25 +63,37 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         mWebView?.settings?.cacheMode = WebSettings.LOAD_DEFAULT
         mWebView?.settings?.javaScriptEnabled = true
         mWebView?.settings?.javaScriptCanOpenWindowsAutomatically = true
-        mWebView?.settings?.allowFileAccessFromFileURLs = false
+        mWebView?.settings?.allowFileAccessFromFileURLs = true
 
 
         mWebView?.settings?.loadsImagesAutomatically = true// 自动加载图片
         //设置自适应屏幕，两者合用
-        mWebView?.settings?.useWideViewPort = false//将图片调整到适合webview的大小
-        mWebView?.settings?.loadWithOverviewMode = false// 缩放至屏幕的大小
+        mWebView?.settings?.useWideViewPort = true//将图片调整到适合webview的大小
+        mWebView?.settings?.loadWithOverviewMode = true// 缩放至屏幕的大小
 
         mWebView?.settings?.databaseEnabled = true// 不再维护 database/webview.db 没有了
         mWebView?.settings?.domStorageEnabled = true// 打开domcache
 
+        mWebView?.settings?.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        mWebView?.settings?.allowContentAccess = true
+        mWebView?.settings?.setSupportZoom(true)
+        mWebView?.settings?.setTextZoom(100)
+        mWebView?.settings?.setAllowContentAccess(true)
+        mWebView?.settings?.setDatabaseEnabled(true)
         mWebView?.settings?.setAppCacheEnabled(true)
-        mWebView?.settings?.setAppCachePath(cacheDir.path)
-        mWebView?.settings?.setAppCacheMaxSize(5*1024*1024)
+        mWebView?.settings?.setSaveFormData(false)
+
+
+//
+//        mWebView?.settings?.setAppCacheEnabled(true)
+//        mWebView?.settings?.setAppCachePath(cacheDir.path)
+//        mWebView?.settings?.setAppCacheMaxSize(5*1024*1024)
 
 
 
 //        mWebView?.loadUrl("file:///android_asset/h5/javascript.html")
         mWebView?.loadUrl("file:///android_asset/h5/timecountdown.html")
+//        mWebView?.loadUrl("https://h.huajiao.com/static/fanclub/change.html")
 //        mWebView?.loadUrl("http://www.huajiao.com")
 //        mWebView?.loadUrl("http://www.qq.com")
 //        mWebView?.loadUrl("https://activity.huajiao.com/web/share/banner/2018/pgcBuy/index.html?userId=")
