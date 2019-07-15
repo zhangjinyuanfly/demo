@@ -5,23 +5,30 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Carson_Ho</title>
 
-
+    <!--prompt("Android调用了JS的callJS方法","result");-->
     <script>
-    function gelocalstr(key){
-
-        return window.localStorage && window.localStorage.getItem(key);
-    }
 
 // Android需要调用的方法
    function callJS(){
-      alert("Android调用了JS的callJS方法");
+      alert('Android调用了JS的callJS方法');
    }
 
+    function showPrompt(){
+　　
+　　var string=prompt("请输入用户名","用户名123","12111");
+　　
+　　}
 
-</script>
+    </script>
 
 </head>
 <body>
 <input type="button" id="btn" value="倒计时" onclick="callJS"/>
+
+　　
+　　<br>
+　　
+　　<button type="button" id="button3" onclick="showPrompt()">showPrompt</button>
+　　
 </body>
 </html>

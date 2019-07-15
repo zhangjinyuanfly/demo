@@ -1,9 +1,7 @@
 package com.zjy.demo.annotation
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import com.zjy.annotation.BindView
+import android.support.v7.app.AppCompatActivity
 import com.zjy.demo.R
 
 class AnnotationActivity : AppCompatActivity() {

@@ -33,6 +33,14 @@ android {
             manifestPlaceholders = [targetver:28]
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def lintTask = tasks["lint${variant.name.capitalize()}"]
+            output.assemble.dependsOn lintTask
+        }
+    }
+
     lintOptions {
         // 设置为 true，则当 Lint 发现错误时停止 Gradle 构建
         abortOnError false
@@ -106,9 +114,9 @@ dependencies {
     implementation 'com.facebook.stetho:stetho-okhttp3:1.4.2'
 
     // annotation 依赖
-    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
-    implementation project(':annotation')
-    implementation project(':processor')
+//    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
+//    implementation project(':annotation')
+//    implementation project(':processor')
     implementation project(':library')
     implementation 'com.google.auto.service:auto-service:1.0-rc3'
     implementation 'com.squareup:javapoet:1.8.0'
@@ -122,13 +130,33 @@ dependencies {
 
     // VasSonic webview预加载
     implementation 'com.tencent.sonic:sdk:2.0.0-beta'
+    implementation project(':customlintaar')
 
 }
 
-task processorTask(type: Copy) {
-    from '../processor/build/libs/processor.jar' into 'libs/'
-}
+//task processorTask(type: Copy) {
+//    from '../processor/build/libs/processor.jar' into 'libs/'
+//}
+//
+////build processor 生成processor.jar
+//processorTask.dependsOn(':processor:build')
+//preBuild.dependsOn(processorTask)
 
-//build processor 生成processor.jar
-processorTask.dependsOn(':processor:build')
-preBuild.dependsOn(processorTask)
+
+//删除isshowtoast.jar包任务
+task clearJar(type: Delete) {
+    delete 'libs/defaultjs.jar'
+}
+task makeDefaultJar(type:Jar){
+    //指定生成的jar名
+    baseName 'defaultjs'
+    //从哪里打包class文件
+    from('build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/zjy/demo/h5/')
+    //打包到jar后的目录结构
+    into('com/zjy/demo/h5/')
+    //去掉不需要打包的目录和文件
+//    exclude('test/','IShowToast.class','BuildConfig.class','R.class')
+//    //去掉R$开头的文件
+//    exclude{it.name.startsWith('R$')}
+}
+makeDefaultJar.dependsOn(clearJar,build)

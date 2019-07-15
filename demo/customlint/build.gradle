@@ -1,0 +1,71 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    // 依赖于lint的规则的api
+    compile 'com.android.tools.lint:lint-api:24.5.0'
+    compile 'com.android.tools.lint:lint-checks:24.5.0'
+
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+}
+
+/**
+ * Lint-Registry是透露给lint工具的注册类的方法，
+ * 也就是PermissionIssueRegistry是lint工具的入口,同时也通过这个方法进行打jar包
+ */
+jar{
+    manifest{
+        attributes('Lint-Registry': 'com.example.customlint.LogRegistry')
+    }
+}
+
+// 创建了一个叫“lintJarOutput”的Gradle configuration，
+// 用于输出我们生成的jar包。在生成aar的模块 "XTCLintAAR" 的build.gradle中会引用此configuration。
+configurations {
+    lintJarOutput
+}
+// 指定定义方法lintJarOutput的作用，此处是获得调用jar方法后的生成的jar包
+dependencies {
+    lintJarOutput files(jar)
+}
+
+defaultTasks 'assemble'
+
+//指定编译使用JDK1.8
+//sourceCompatibility = JavaVersion.VERSION_1_8
+//targetCompatibility = JavaVersion.VERSION_1_8
+
+//指定编译的编码
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+
+//configurations {
+//    lintRules
+//}
+//
+//dependencies {
+//    lintRules project(path: ":lintrules", configuration: "lintRules")
+//}
+//
+//task copyLintJar(type: Copy){
+//    from (configurations.lintRules) {
+//        rename {
+//            String fileName ->
+//                'lint.jar'
+//        }
+//    }
+//    into 'build/intermediates/lint/'
+//}
+//
+//project.afterEvaluate{
+//    def compileLintTask = project.tasks.find {it.name == 'compileLint'}
+//    compileLintTask.dependsOn(copyLintJar)
+//}

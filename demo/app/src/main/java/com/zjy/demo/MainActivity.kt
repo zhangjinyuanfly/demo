@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.zjy.demo.annotation.AnnotationActivity
 import com.zjy.demo.constraint.ConstraintActivity
@@ -15,6 +16,7 @@ import com.zjy.demo.h5.H5Activity
 import com.zjy.demo.jetpack.PagingActivity
 import com.zjy.demo.jetpack.ViewModelActivity
 import com.zjy.demo.picinpic.PicInPicActivity
+import com.zjy.demo.views.BarRoundProgressBar
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     var recycleDemo: RecyclerView? = null
     var demoHolder: DemoHolder? = null
+    var progressbar : BarRoundProgressBar?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,6 +33,11 @@ class MainActivity : AppCompatActivity() {
         recycleDemo = findViewById(R.id.recycle_demo)
         recycleDemo?.layoutManager = LinearLayoutManager(this)
         recycleDemo?.adapter = DemoAdapter()
+
+        progressbar = findViewById(R.id.progress);
+        progressbar?.roundMax = 10
+        progressbar?.progress = 3
+        System.out.print(111);
     }
 
 

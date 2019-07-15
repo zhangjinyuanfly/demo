@@ -12,6 +12,7 @@ import android.webkit.*
 import android.widget.TextView
 import com.zjy.demo.R
 import java.io.BufferedInputStream
+import java.io.File
 
 
 class H5Activity : AppCompatActivity(), View.OnClickListener {
@@ -21,19 +22,19 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         startActivity(intent)
     }
 
-    var mWebView : WebView ?= null
-    var mBtnLoadData : TextView ?= null
-    var mBtnStartNewH5: TextView ?= null
-    var mBtnResume: TextView ?= null
-    var mBtnPause: TextView ?= null
-    var mBtnResumeTimer: TextView ?= null
-    var mBtnPauseTimer: TextView ?= null
-    var mBtnGoBack: TextView ?= null
-    var mBtnGoGorward: TextView?= null
-    var mBtnClearCache: TextView?= null
+    var mWebView: WebView? = null
+    var mBtnLoadData: TextView? = null
+    var mBtnStartNewH5: TextView? = null
+    var mBtnResume: TextView? = null
+    var mBtnPause: TextView? = null
+    var mBtnResumeTimer: TextView? = null
+    var mBtnPauseTimer: TextView? = null
+    var mBtnGoBack: TextView? = null
+    var mBtnGoGorward: TextView? = null
+    var mBtnClearCache: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.e("zjy","H5Activity onCreate")
+        Log.e("zjy", "H5Activity onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_h5)
 
@@ -81,7 +82,6 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         mWebView?.settings?.setAllowContentAccess(true)
         mWebView?.settings?.setDatabaseEnabled(true)
         mWebView?.settings?.setAppCacheEnabled(true)
-        mWebView?.settings?.setSaveFormData(false)
 
 
 //
@@ -90,9 +90,8 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
 //        mWebView?.settings?.setAppCacheMaxSize(5*1024*1024)
 
 
-
-//        mWebView?.loadUrl("file:///android_asset/h5/javascript.html")
-        mWebView?.loadUrl("file:///android_asset/h5/timecountdown.html")
+        mWebView?.loadUrl("file:///android_asset/h5/javascript.html")
+//        mWebView?.loadUrl("file:///android_asset/h5/timecountdown.html")
 //        mWebView?.loadUrl("https://h.huajiao.com/static/fanclub/change.html")
 //        mWebView?.loadUrl("http://www.huajiao.com")
 //        mWebView?.loadUrl("http://www.qq.com")
@@ -100,23 +99,23 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
 //        mWebView?.loadUrl("https://test.huajiao.com/h5_plugin/test.html")
         mWebView?.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                Log.e("zjy","shouldOverrideUrlLoading url = "+url)
+                Log.e("zjy", "shouldOverrideUrlLoading url = " + url)
                 return super.shouldOverrideUrlLoading(view, url)
             }
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                Log.e("zjy","onPageStarted url = "+url)
+                Log.e("zjy", "onPageStarted url = " + url)
                 super.onPageStarted(view, url, favicon)
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                Log.e("zjy","onPageFinished url = "+url)
+                Log.e("zjy", "onPageFinished url = " + url)
                 super.onPageFinished(view, url)
                 writeData()
             }
 
             override fun shouldInterceptRequest(view: WebView?, url: String?): WebResourceResponse? {
-                Log.e("zjy","shouldInterceptRequest url = "+url)
+                Log.e("zjy", "shouldInterceptRequest url = " + url)
                 return super.shouldInterceptRequest(view, url)
             }
 
@@ -126,7 +125,7 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
 
             override fun onLoadResource(view: WebView?, url: String?) {
                 super.onLoadResource(view, url)
-                Log.e("zjy","onLoadResource = "+url)
+                Log.e("zjy", "onLoadResource = " + url)
             }
         }
 
@@ -146,7 +145,24 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
                 return true
             }
 
+            override fun onJsPrompt(
+                view: WebView?,
+                url: String?,
+                message: String?,
+                defaultValue: String?,
+                result: JsPromptResult?
+            ): Boolean {
+                Log.e("zjy", "url = " + url)
+                Log.e("zjy", "message = " + message)
+                Log.e("zjy", "defaultValue = " + defaultValue)
+
+
+                DexUtils.loadDexClass(this@H5Activity);
+                return true;//super.onJsPrompt(view, url, message, defaultValue, result)
+            }
         })
+
+
     }
 
     fun writeData() {
@@ -174,7 +190,7 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.loaddata -> loadData()//mWebView?.loadUrl("javascript:callJS()")
             R.id.start_h5 -> startH5()
             R.id.resumetimer -> mWebView?.resumeTimers()
@@ -194,13 +210,13 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         // load data
         val open = assets.open("h5/javascript.html")
         var bufferedReader = BufferedInputStream(open)
-        var byte:ByteArray = ByteArray(1024)
+        var byte: ByteArray = ByteArray(1024)
         var i = 0;
         var stringBuffer = StringBuffer()
-        while((open.read(byte, 0, byte.size)) != -1) {
+        while ((open.read(byte, 0, byte.size)) != -1) {
             stringBuffer.append(String(byte))
         }
-        Log.e("zjy","stringbuffer = "+stringBuffer.toString())
+        Log.e("zjy", "stringbuffer = " + stringBuffer.toString())
         // 存在中文乱码问题
 //        mWebView?.loadData(stringBuffer.toString(), "text/html", "utf-8")
         // 调整为
@@ -212,4 +228,5 @@ class H5Activity : AppCompatActivity(), View.OnClickListener {
         super.onDestroy()
 //        WebViewPreLoadHelper.getInstance(this)!!.clear()
     }
+
 }

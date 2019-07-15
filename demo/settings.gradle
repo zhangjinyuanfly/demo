@@ -1,1 +1,1 @@
-include ':app', ':annotation', ':processor', ':library',':webview'
+include ':app', ':annotation', ':customlint', ':customlintaar', /*':processor',*/ ':library', ':webview'
