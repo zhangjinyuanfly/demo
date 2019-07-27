@@ -21,7 +21,7 @@ public class ConstructorDetector extends Detector implements Detector.UastScanne
     public static final Issue ISSUE = Issue.create(
             "NewThread",
             "避免自己创建Thread",
-            "请勿直接调用new Thread()，建议使用统一的线程池管理工具类",
+            "请勿直接调用new Thread()，建议使用统一的线程池管理工具类.",
             Category.PERFORMANCE, 5, Severity.ERROR,
             new Implementation(ConstructorDetector.class, Scope.JAVA_FILE_SCOPE));
 
