@@ -2,9 +2,7 @@ package com.zjy.lintlib;
 
 import com.android.tools.lint.checks.UnusedResourceDetector;
 import com.android.tools.lint.client.api.IssueRegistry;
-import com.android.tools.lint.detector.api.ApiKt;
 import com.android.tools.lint.detector.api.Issue;
-import com.android.tools.lint.detector.api.LayoutDetector;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,16 +18,9 @@ public class CustomRegister extends IssueRegistry {
             add(MethodDetector.ISSUE);
             add(ConstructorDetector.ISSUE);
             add(UnusedResourceDetector.ISSUE);
+            add(LayoutXMLDetector.ISSUE);
+            add(ResourceDetector.ISSUE);
         }};
     }
 
-    @Override
-    public int getApi() {
-        return ApiKt.CURRENT_API;
-    }
-
-    @Override
-    public int getMinApi() {
-        return 1;
-    }
 }

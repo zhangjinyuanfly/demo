@@ -1,3 +1,0 @@
-#!D:/soft/Git/bin/sh.exe
-./gradlew lintCheck
-exit 0

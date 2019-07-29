@@ -1,5 +1,6 @@
 package com.lintrules.detectors;
 
+import com.android.ddmlib.Log;
 import com.android.tools.lint.detector.api.Category;
 import com.android.tools.lint.detector.api.Implementation;
 import com.android.tools.lint.detector.api.Issue;
@@ -90,7 +91,6 @@ public class ViewIdCorrectnessDetector extends LayoutDetector {
                     right = idValue.startsWith(expMsg);
                     break;
             }
-
             if(!right) {
                 context.report(ISSUE, attr, context.getLocation(attr),
                         String.format(
