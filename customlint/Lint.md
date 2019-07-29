@@ -12,8 +12,6 @@
 
 
 
-
-
 忽略lint检查
 
 @SuppressLint("all")
@@ -47,3 +45,76 @@ lint.xml配置
 Android Studio 3.X 
 
 lint:26
+
+`IssueRegistry`：入口，配置项
+
+`Detector`：实现类
+
+```groovy
+apply plugin: 'java'
+dependencies {
+    compileOnly 'com.android.tools.lint:lint-api:26.2.0'
+    compileOnly 'com.android.tools.lint:lint-checks:26.2.0'
+}
+jar {
+    manifest {
+        attributes("Lint-Registry-v2": "com.zjy.lintlib.CustomRegister")
+    }
+}
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+```
+
+Detector：支持的检查类型：
+
+**ResourceFolderScanner** 
+**UastScanner**
+**XmlScanner**
+**FileScanner**
+BinaryResourceScanner
+ClassScanner 
+GradleScanner 
+OtherFileScanner
+
+
+
+ 
+
+
+
+
+
+全局使用：
+
+生成的lint.jar 放在\.android\lint\  命令启动lint检查
+
+引入工程中：作为module引入，使用lintChecks
+
+```groovy
+lintChecks project(':lintlib')
+```
+
+
+
+
+
+git hooks  commit 检查：创建  pre-commit 提交前检查
+
+```shell
+#!D:/soft/Git/bin/sh.exe
+work_path=$(dirname $0)
+cd d:/github/demo/demo/customlint
+./gradlew lintDebug
+exit 1 # 1中断，0继续执行
+```
+
+
+
+lint 调试开发
+
+环境变量
+GRADLE_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
+
+gradlew.bat clean lintDebug -Dorg.gradle.daemon=false -Dorg.gradle.debug=true --no-daemon
+
