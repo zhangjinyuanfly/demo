@@ -1,16 +1,14 @@
 [Lint](https://developer.android.com/studio/write/lint?hl=zh-CN)
 
-执行：gradlew lint
+执行：手动执行，命令执行
 
-如果您只想为特定构建变体运行 `lint` 任务，您必须大写变体名称并在其前面加上 `lint` 前缀
+gradlew lint
+
+为特定构建变体运行 `lint` 任务，必须大写变体名称并在其前面加上 `lint` 前缀
 
 `lintDebug`  `lintRelease` `lintSmDisableLoginForceFullScreenDisableCtaDisablePreviewNRelease`
 
-
-
-系统预制lint：C:\Users\zhangjinyuan\.gradle\caches\modules-2\files-2.1\com.android.tools.lint\lint-checks\24.5.0\dbdca0447c2333481823e088a356393e653276b4\lint-checks-24.5.0.jar
-
-
+## 基本使用
 
 Gradle配置：
 
@@ -18,14 +16,16 @@ Gradle配置：
 lintOptions {
     //Lint检查文件的类型，默认是.java和.xml。可以自定义其他类型的文件
     lintCheckFileType = ".java,.xml" 
-    //默认是false。为true的时候会扫描git commit时候所有的代码并且输出扫描
-    lintReportAll = false 
-    // 设置为 true时lint将不报告分析的进度
-    quiet true
+    // 重置 lint 配置（使用默认的严重性等设置）。
+    lintConfig file("default-lint.xml")
     // 如果为 true，则当lint发现错误时停止 gradle构建
     abortOnError false
     // 如果为 true，则只报告错误
     ignoreWarnings true
+    // 设置为 true时lint将不报告分析的进度
+    quiet true
+    //默认是false。为true的时候会扫描git commit时候所有的代码并且输出扫描
+    lintReportAll = false 
     // 如果为 true，则当有错误时会显示文件的全路径或绝对路径 (默认情况下为true)
     //absolutePaths true
     // 如果为 true，则检查所有的问题，包括默认不检查问题
@@ -42,8 +42,6 @@ lintOptions {
     noLines true
     // 如果为 true，则对一个错误的问题显示它所在的所有地方，而不会截短列表，等等。
     showAll true
-    // 重置 lint 配置（使用默认的严重性等设置）。
-    lintConfig file("default-lint.xml")
     // 如果为 true，生成一个问题的纯文本报告（默认为false）
     textReport true
     // 配置写入输出结果的位置；它可以是一个文件或 “stdout”（标准输出）
@@ -75,39 +73,43 @@ lintOptions {
 
 
 
-忽略lint检查
+忽略lint检查：
 
-@SuppressLint("all")
+1. 代码忽略：`@SuppressLint("all")`
 
-lint.xml配置
+2. lint.xml配置：
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<lint>    
-    <!-- Disable the given check in this project -->    
-    <issue id="IconMissingDensityFolder" severity="ignore" />    
-    <!-- Ignore the ObsoleteLayoutParam issue in the specified files -->    	<issue id="ObsoleteLayoutParam">        
-        <ignore path="res/layout/activation.xml" />
-        <ignore path="res/layout-xlarge/activation.xml" />
-    </issue>    
-    <!-- Ignore the UselessLeaf issue in the specified file -->    
-    <issue id="UselessLeaf">
-        <ignore path="res/layout/main.xml" />
-    </issue>    
-    <!-- Change the severity of hardcoded strings to "error" -->    
-    <issue id="HardcodedText" severity="error" />
-</lint>
-```
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <lint>    
+       <!-- Disable the given check in this project -->    
+       <issue id="IconMissingDensityFolder" severity="ignore" />    
+       <!-- Ignore the ObsoleteLayoutParam issue in the specified files -->    	<issue id="ObsoleteLayoutParam">        
+           <ignore path="res/layout/activation.xml" />
+           <ignore path="res/layout-xlarge/activation.xml" />
+       </issue>    
+       <!-- Ignore the UselessLeaf issue in the specified file -->    
+       <issue id="UselessLeaf">
+           <ignore path="res/layout/main.xml" />
+       </issue>    
+       <!-- Change the severity of hardcoded strings to "error" -->    
+       <issue id="HardcodedText" severity="error" />
+   </lint>
+   ```
+
+3. XML忽略：`tools:ignore="issueId"`
 
 
 
-自定义lint：
+## 自定义lint：
 
-版本：
+系统lint路径：`.gradle\caches\modules-2\files-2.1\com.android.tools.lint\lint-checks\24.5.0\dbdca0447c2333481823e088a356393e653276b4\lint-checks-24.5.0.jar`
+
+自定义lint
 
 Android Studio 3.X 
 
-lint:26
+
 
 `IssueRegistry`：入口，配置项
 
@@ -130,38 +132,53 @@ tasks.withType(JavaCompile) {
 ```
 
 Detector：支持的检查类型：
-**UastScanner**
-**XmlScanner**
-ResourceFolderScanner
-FileScanner
-BinaryResourceScanner
-ClassScanner 
-GradleScanner 
-OtherFileScanner
+
+1. ISSUE：定义检查项
+
+2. 实现扫描接口
+
+   **UastScanner**
+   **XmlScanner**
+   ResourceFolderScanner
+   FileScanner
+   BinaryResourceScanner
+   ClassScanner 
+   GradleScanner 
+   OtherFileScanner
+
+3. report错误
 
 
 
- 
-
-
-
-
-
-全局使用：
+### 1.全局使用：
 
 生成的lint.jar 放在\.android\lint\  命令启动lint检查
 
-引入工程中：作为module引入，使用lintChecks
+\.android\lint\lint.jar
+
+### 2.引入工程中：作为module引入，使用lintChecks
 
 ```groovy
 lintChecks project(':lintlib')
 ```
 
+检查时机：
 
+1. coding过程代码提示：
 
+2. 编译过程中检查，会降低编译速度
 
+   ```groovy
+   // compile过程检查lint
+   android.applicationVariants.all { variant ->
+       variant.outputs.each { output ->
+           def lintTask = tasks["lint${variant.name.capitalize()}"]
+           output.assemble.dependsOn lintTask
+       }
+   }
+   ```
 
-git hooks  commit 检查：创建  pre-commit 提交前检查
+3. git hooks  commit 检查：创建  pre-commit 提交前检查
 
 ```shell
 #!D:/soft/Git/bin/sh.exe
@@ -173,7 +190,7 @@ exit 1 # 1中断，0继续执行
 
 
 
-lint 调试开发
+## lint 调试开发
 
 环境变量
 GRADLE_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
