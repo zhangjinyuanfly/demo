@@ -16,6 +16,7 @@ public class CustomRegister extends IssueRegistry {
     public List<Issue> getIssues() {
         return new ArrayList<Issue>(){{
             add(MethodDetector.ISSUE);
+            add(ClassCommentDetector.ISSUE);
             add(ConstructorDetector.ISSUE);
             add(UnusedResourceDetector.ISSUE);
             add(LayoutXMLDetector.ISSUE);

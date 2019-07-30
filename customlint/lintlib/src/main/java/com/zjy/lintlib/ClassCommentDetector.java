@@ -8,52 +8,29 @@ import com.android.tools.lint.detector.api.Issue;
 import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
 import com.android.tools.lint.detector.api.Severity;
-import com.intellij.psi.PsiMethod;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.uast.UCallExpression;
 import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UComment;
 import org.jetbrains.uast.UElement;
 import org.jetbrains.uast.java.JavaUClass;
 import org.jetbrains.uast.kotlin.KotlinUClass;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MethodDetector extends Detector implements Detector.UastScanner {
+public class ClassCommentDetector extends Detector implements Detector.UastScanner {
+
 
     public static final Issue ISSUE = Issue.create(
-            "LogUsage",
-            "用错了",
-            "Log的应该使用统一Log工具类",
-            Category.SECURITY, 5, Severity.ERROR,
-            new Implementation(MethodDetector.class, Scope.JAVA_FILE_SCOPE));
-
-
-    @Override
-    public List<String> getApplicableMethodNames() {
-        return Arrays.asList("v", "d", "i", "w", "e");
-    }
-
-    @Override
-    public void visitMethod(JavaContext context, UCallExpression node, PsiMethod method) {
-        if (context.getEvaluator().isMemberInClass(method, "android.util.Log")) {
-            context.report(ISSUE, node, context.getLocation(node), "改一下应该使用统一Log工具类");
-        }
-    }
-
-
-    public static final Issue ISSUECOMMENT = Issue.create(
             "classcomment",
             "类注释",
             "应该添加必要注释",
             Category.CORRECTNESS,
             5,
             Severity.ERROR,
-            new Implementation(MethodDetector.class, Scope.JAVA_FILE_SCOPE)
+            new Implementation(ClassCommentDetector.class, Scope.JAVA_FILE_SCOPE)
     );
     @Nullable
     @Override
@@ -74,8 +51,10 @@ public class MethodDetector extends Detector implements Detector.UastScanner {
                         UComment uComment = comments.get(0);
                         String s = uComment.asSourceString().toLowerCase();
                         if(!s.contains("author")) {
-                            context.report(ISSUECOMMENT, context.getNameLocation(node), "类注释没有添加author");
+                            context.report(ISSUE, context.getNameLocation(node), "类注释没有添加author");
                         }
+                    } else {
+                        context.report(ISSUE, context.getNameLocation(node), "小伙没加注释啊");
                     }
 
                 }

@@ -3,7 +3,6 @@ package com.zjy.lint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.webkit.WebView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WebView webView = new WebView(this);
-        webView.evaluateJavascript("fff", null);
+//        WebView webView = new WebView(this);
+//        webView.evaluateJavascript("fff", null);
         Log.d("1","222");
         Log.e("1","ffff");
         Log.v("1","ffffdd");
