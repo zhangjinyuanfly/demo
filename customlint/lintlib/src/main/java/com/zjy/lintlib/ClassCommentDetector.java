@@ -20,6 +20,9 @@ import org.jetbrains.uast.kotlin.KotlinUClass;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * author z
+ */
 public class ClassCommentDetector extends Detector implements Detector.UastScanner {
 
 

@@ -28,7 +28,7 @@ public class MethodDetector extends Detector implements Detector.UastScanner {
     public static final Issue ISSUE = Issue.create(
             "LogUsage",
             "用错了",
-            "Log的应该使用统一Log工具类",
+            "使用统一Log",
             Category.SECURITY, 5, Severity.ERROR,
             new Implementation(MethodDetector.class, Scope.JAVA_FILE_SCOPE));
 
@@ -45,41 +45,4 @@ public class MethodDetector extends Detector implements Detector.UastScanner {
         }
     }
 
-
-    public static final Issue ISSUECOMMENT = Issue.create(
-            "classcomment",
-            "类注释",
-            "应该添加必要注释",
-            Category.CORRECTNESS,
-            5,
-            Severity.ERROR,
-            new Implementation(MethodDetector.class, Scope.JAVA_FILE_SCOPE)
-    );
-    @Nullable
-    @Override
-    public List<Class<? extends UElement>> getApplicableUastTypes() {
-        return Collections.singletonList(UClass.class);
-    }
-
-    @Nullable
-    @Override
-    public UElementHandler createUastHandler(@NotNull JavaContext context) {
-        return new UElementHandler(){
-            @Override
-            public void visitClass(@NotNull UClass node) {
-                boolean b = (node instanceof JavaUClass || node instanceof KotlinUClass) && node.getContainingClass() == null;
-                if(b) {
-                    List<UComment> comments = node.getComments();
-                    if(comments != null && comments.size() > 0) {
-                        UComment uComment = comments.get(0);
-                        String s = uComment.asSourceString().toLowerCase();
-                        if(!s.contains("author")) {
-                            context.report(ISSUECOMMENT, context.getNameLocation(node), "类注释没有添加author");
-                        }
-                    }
-
-                }
-            }
-        };
-    }
 }

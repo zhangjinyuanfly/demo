@@ -1,14 +1,20 @@
 [Lint](https://developer.android.com/studio/write/lint?hl=zh-CN)
 
+## 基本使用
+
+lint命令工具路径：`sdk\tools\bin\lint.bat`
+
+### Gradle项目中使用：
+
 执行：手动执行，命令执行
 
-gradlew lint
+`gradlew lint`
+
+LintPlugin--IintRun--
 
 为特定构建变体运行 `lint` 任务，必须大写变体名称并在其前面加上 `lint` 前缀
 
 `lintDebug`  `lintRelease` `lintSmDisableLoginForceFullScreenDisableCtaDisablePreviewNRelease`
-
-## 基本使用
 
 Gradle配置：
 
@@ -109,11 +115,11 @@ lintOptions {
 
 Android Studio 3.X 
 
-
-
 `IssueRegistry`：入口，配置项
 
 `Detector`：实现类
+
+创建java工程，gradle配置如下：
 
 ```groovy
 apply plugin: 'java'
@@ -131,7 +137,18 @@ tasks.withType(JavaCompile) {
 }
 ```
 
-Detector：支持的检查类型：
+IssueRegistry：`getIssues`返回需要的检查项
+
+```java
+public List<Issue> getIssues() {
+    return new ArrayList<Issue>(){{
+        add(MethodDetector.ISSUE);// 添加自定义issue
+        add(UnusedResourceDetector.ISSUE);// 添加系统的issue
+    }};
+}
+```
+
+Detector检查器，主要步骤：
 
 1. ISSUE：定义检查项
 
@@ -146,9 +163,23 @@ Detector：支持的检查类型：
    GradleScanner 
    OtherFileScanner
 
-3. report错误
+3. 重写方法：
+
+   getApplicableXXX：返回符合规范的检查项
+
+   visitXXX：接受符合规范的检查项信息，并进行检查
+
+4. 检查有问题，通过report提交错误
 
 
+
+方法检查：
+
+类检查：
+
+xml检查：
+
+类注释检查：
 
 ### 1.全局使用：
 
@@ -193,7 +224,7 @@ exit 1 # 1中断，0继续执行
 ## lint 调试开发
 
 环境变量
-GRADLE_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
+GRADLE_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
 
 gradlew.bat clean lintDebug -Dorg.gradle.daemon=false -Dorg.gradle.debug=true --no-daemon
 
