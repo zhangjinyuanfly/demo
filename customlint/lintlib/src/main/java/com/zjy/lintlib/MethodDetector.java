@@ -27,7 +27,7 @@ public class MethodDetector extends Detector implements Detector.UastScanner {
 
     public static final Issue ISSUE = Issue.create(
             "LogUsage",
-            "用错了",
+            "Log方法使用错误",
             "使用统一Log",
             Category.SECURITY, 5, Severity.ERROR,
             new Implementation(MethodDetector.class, Scope.JAVA_FILE_SCOPE));
