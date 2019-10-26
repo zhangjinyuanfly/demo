@@ -4,26 +4,31 @@
 
 lint命令工具路径：`sdk\tools\bin\lint.bat`
 
-### Gradle项目中使用：
+#### Gradle项目中使用：
 
 执行：手动执行，命令执行
 
 `gradlew lint`
 
-LintPlugin--IintRun--
-
 为特定构建变体运行 `lint` 任务，必须大写变体名称并在其前面加上 `lint` 前缀
 
 `lintDebug`  `lintRelease` `lintSmDisableLoginForceFullScreenDisableCtaDisablePreviewNRelease`
 
-Gradle配置：
+#### gradle lint步骤：
+
+1. LintPlugin 创建task
+2. LintStandaloneTask
+3. ReflectiveLintRunner.runLint
+4. LintGradleExecution.analyze(反射)
+
+#### Gradle配置：
 
 ```groovy
 lintOptions {
     //Lint检查文件的类型，默认是.java和.xml。可以自定义其他类型的文件
     lintCheckFileType = ".java,.xml" 
     // 重置 lint 配置（使用默认的严重性等设置）。
-    lintConfig file("default-lint.xml")
+    lintConfig file("lint.xml")
     // 如果为 true，则当lint发现错误时停止 gradle构建
     abortOnError false
     // 如果为 true，则只报告错误
@@ -79,7 +84,7 @@ lintOptions {
 
 
 
-忽略lint检查：
+#### 忽略lint检查：
 
 1. 代码忽略：`@SuppressLint("all")`
 
@@ -103,23 +108,29 @@ lintOptions {
    </lint>
    ```
 
-3. XML忽略：`tools:ignore="issueId"`
-
-
+3. XML忽略：`tools:ignore="issueId/all"`
 
 ## 自定义lint：
 
 系统lint路径：`.gradle\caches\modules-2\files-2.1\com.android.tools.lint\lint-checks\24.5.0\dbdca0447c2333481823e088a356393e653276b4\lint-checks-24.5.0.jar`
 
-自定义lint
+#### 开发环境
 
 Android Studio 3.X 
+
+lint sdk 2.6
+
+老版本集成module测试非常麻烦。直接选择高版本开发
+
+#### 涉及主要类
 
 `IssueRegistry`：入口，配置项
 
 `Detector`：实现类
 
-创建java工程，gradle配置如下：
+#### 开发步骤：
+
+1. 创建java工程，gradle配置如下：
 
 ```groovy
 apply plugin: 'java'
@@ -137,7 +148,7 @@ tasks.withType(JavaCompile) {
 }
 ```
 
-IssueRegistry：`getIssues`返回需要的检查项
+2. IssueRegistry：`getIssues`返回需要的检查项
 
 ```java
 public List<Issue> getIssues() {
@@ -148,46 +159,50 @@ public List<Issue> getIssues() {
 }
 ```
 
-Detector检查器，主要步骤：
+3. Detector检查器，主要步骤：
 
-1. ISSUE：定义检查项
+   1. ISSUE：定义检查项
 
-2. 实现扫描接口
+   2. 实现扫描接口
 
-   **UastScanner**
-   **XmlScanner**
-   ResourceFolderScanner
-   FileScanner
-   BinaryResourceScanner
-   ClassScanner 
-   GradleScanner 
-   OtherFileScanner
+      **UastScanner**
+      **XmlScanner**
+      ResourceFolderScanner
+      FileScanner
+      BinaryResourceScanner
+      ClassScanner 
+      GradleScanner 
+      OtherFileScanner
 
-3. 重写方法：
+   3. 重写方法：
 
-   getApplicableXXX：返回符合规范的检查项
+      getApplicableXXX：返回符合规范的检查项
 
-   visitXXX：接受符合规范的检查项信息，并进行检查
+      visitXXX：接受符合规范的检查项信息，并进行检查
 
-4. 检查有问题，通过report提交错误
+   4. 检查有问题，通过report提交错误
 
 
 
-方法检查：
+方法检查：getApplicableMethodNames - visitMethod
 
-类检查：
+类检查：getApplicableConstructorTypes - visitConstructor
 
-xml检查：
+xml检查：getApplicableElements - visitElement
 
-类注释检查：
+类注释检查：getApplicableUastTypes - createUastHandler
 
-### 1.全局使用：
+
+
+### 使用自定义lint检查
+
+#### 1.全局使用：
 
 生成的lint.jar 放在\.android\lint\  命令启动lint检查
 
 \.android\lint\lint.jar
 
-### 2.引入工程中：作为module引入，使用lintChecks
+#### 2.引入工程中：作为module引入，使用lintChecks
 
 ```groovy
 lintChecks project(':lintlib')
@@ -211,15 +226,13 @@ lintChecks project(':lintlib')
 
 3. git hooks  commit 检查：创建  pre-commit 提交前检查
 
-```shell
-#!D:/soft/Git/bin/sh.exe
-work_path=$(dirname $0)
-cd d:/github/demo/demo/customlint
-./gradlew lintDebug
-exit 1 # 1中断，0继续执行
-```
-
-
+    ```shell
+    #!D:/soft/Git/bin/sh.exe
+    work_path=$(dirname $0)
+    cd d:/github/demo/demo/customlint
+    ./gradlew lintDebug
+    exit 1 # 1中断，0继续执行
+    ```
 
 ## lint 调试开发
 
@@ -228,3 +241,9 @@ GRADLE_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=500
 
 gradlew.bat clean lintDebug -Dorg.gradle.daemon=false -Dorg.gradle.debug=true --no-daemon
 
+
+
+
+
+1. lint自定义加入 现有 lintCheck
+2. 日志预警上报增加case。礼物部分（刘伟）

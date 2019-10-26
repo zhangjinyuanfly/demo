@@ -20,7 +20,7 @@ public class CustomRegister extends IssueRegistry {
             add(ConstructorDetector.ISSUE);
             add(UnusedResourceDetector.ISSUE);
             add(LayoutXMLDetector.ISSUE);
-            add(ResourceDetector.ISSUE);
+//            add(ResourceDetector.ISSUE);
         }};
     }
 
