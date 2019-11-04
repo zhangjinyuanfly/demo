@@ -2,11 +2,13 @@ package com.example.kotlin
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.provider.Contacts
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 
