@@ -2,13 +2,11 @@ package com.example.kotlin
 
 import android.os.Bundle
 import android.os.SystemClock
-import android.provider.Contacts
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 
@@ -27,9 +25,29 @@ class MainActivity : AppCompatActivity() {
             startAsync()
 //            startAsyncThread()
         }
-        btn_let.setOnClickListener {
+        btn_let.apply {
+            text = "我是谁"
+            textSize = 13f
+        }.setOnClickListener {
             letTest()
-//            startAsyncThread()
+        }
+
+        var b = btn_let.run {
+            text = "ddd"
+            1
+        }
+        btn_let.let {btn ->
+
+        }
+
+        var r = kotlin.run {
+            11
+        }
+
+        Log.e("zjy","$r")
+
+        with(btn_let) {
+            text = "你是谁"
         }
     }
 
@@ -63,11 +81,22 @@ class MainActivity : AppCompatActivity() {
         }?:run {
 
         }
-    }
-    fun println() :Unit {
-        Log.e("zjy","sss")
+
+        var baseT:BaseT = AT().apply {
+            name = "AT"
+        }
+        check(baseT)
     }
 
+    fun check(t:BaseT) {
+        val a = when(t) {
+            is AT -> {
+                Log.e("zjy","baseT.name = ${t.name}")
+            }
+            is BT -> {}
+            is CT -> {}
+        }
+    }
 
     private fun startAsyncThread() {
         thread {
@@ -156,3 +185,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+sealed class BaseT {
+    var name = "base"
+}
+class AT:BaseT() {
+}
+class BT:BaseT() {
+}
+class CT:BaseT() {
+}
+
